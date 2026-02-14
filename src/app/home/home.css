@@ -1,13 +1,13 @@
 /* Target the root HTML and Body */
 html, body {
-  height: 100%;       /* Ensures the background covers the full screen */
-  margin: 0;          /* Removes the default browser margin */
-  padding: 0;         /* Removes the default browser padding */
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* --- HERO SECTION --- */
 .hero-section {
-  min-height: calc(100vh - 80px); /* Subtract navbar height */
+  min-height: calc(100vh - 100px); /* Subtract navbar height (100px from your nav) */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,62 +18,218 @@ html, body {
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Split screen layout */
+  grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  max-width: 1200px;
+  max-width: 1400px;
+  width: 100%;
   align-items: center;
+  margin: 0 auto;
+}
+
+/* Left Side - Text */
+.hero-text {
+  padding: 3rem 0;
+  animation: slideInLeft 0.8s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .hero-text .greeting {
   font-size: 1.5rem;
-  color: var(--primary-navy);
-  margin-bottom: 0.5rem;
+  color: #666;
+  margin-bottom: 1rem;
   font-weight: 500;
+  animation: slideInLeft 0.8s ease;
 }
 
 .hero-text .name {
-  font-size: 4.5rem;
+  font-size: 6.5rem;
   line-height: 1.1;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  color: #b12930;
+  font-weight: 900;
+  animation: slideInLeft 0.8s ease 0.2s backwards;
 }
 
 .hero-text .title {
   font-size: 1.8rem;
   color: var(--text-dark);
-  opacity: 0.8;
   margin-bottom: 2rem;
   font-weight: 300;
+  min-height: 3rem; /* Prevents layout shift */
+  animation: slideInLeft 0.8s ease 0.4s backwards;
 }
 
+#typingText::after {
+  content: '|';
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+/* CTA Button */
 .cta-button {
   padding: 1rem 2.5rem;
-  font-size: 1rem;
-  background-color: var(--primary-navy);
-  color: #fff;
+  font-size: 1.1rem;
+  background-color: #b12930;
+  color: var(--primary-navy);
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  animation: slideInLeft 0.8s ease 0.6s backwards;
 }
 
 .cta-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
+  transform: translateY(-3px);
+  background-color: #fff;
+  color:#b12930;
 }
 
-/* Hero Visual / Placeholder Box */
-.hero-visual .image-placeholder {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: #e5e7eb;
-  border-radius: 20px;
+/* Right Side - Image */
+.hero-visual {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b7280;
-  border: 2px dashed #9ca3af;
+  animation: slideInRight 1s ease 0.3s backwards;
 }
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-visual .image-placeholder {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(135deg, var(--primary-navy), #3b82f6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(30, 58, 138, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hero-visual .image-placeholder:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.4);
+}
+
+/* Animated border inside the circle */
+.hero-visual .image-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  border: 3px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.placeholder-text {
+  z-index: 1;
+  position: relative;
+}
+
+/* Dark Mode Support */
+.dark-theme .hero-text .greeting {
+  color: #94a3b8;
+}
+
+.dark-theme .hero-text .name {
+  color: #3B82F6;
+}
+
+.dark-theme .roles {
+  color: #cbd5e1;
+}
+
+.dark-theme .cta-button {
+  background-color: #3B82F6;
+}
+
+.dark-theme .cta-button:hover {
+  background-color: #60A5FA;
+}
+
+.dark-theme .image-placeholder {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+}
+
+.dark-theme .image-placeholder::before {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-text .name {
+    font-size: 3rem;
+  }
+
+  .roles {
+    font-size: 1.4rem;
+  }
+
+  .hero-visual .image-placeholder {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text .name {
+    font-size: 2.5rem;
+  }
+
+  .roles {
+    font-size: 1.2rem;
+  }
+
+  .hero-visual .image-placeholder {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+/* Keep your existing About, Skills, and CTA sections CSS below... */
 
 /* --- ABOUT SECTION --- */
 .about-section {

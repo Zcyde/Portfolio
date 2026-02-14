@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -20,11 +20,11 @@ export class Navbar implements OnInit, AfterViewInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Check for saved theme preference here if you like
+    // Theme preference logic
   }
 
   ngAfterViewInit(): void {
-    // Initialize indicator position on first load
+    // Initialize indicator position
     setTimeout(() => {
       const activeLink = this.navLinks.nativeElement.querySelector('a.active');
       if (activeLink && window.innerWidth > 768) {
@@ -35,8 +35,6 @@ export class Navbar implements OnInit, AfterViewInit {
 
   setActive(event: Event) {
     const clickedLink = event.target as HTMLElement;
-    
-    // Move indicator to clicked link (desktop only)
     if (window.innerWidth > 768) {
       this.moveIndicator(clickedLink);
     }
@@ -61,8 +59,6 @@ export class Navbar implements OnInit, AfterViewInit {
 
   scrollToSection(sectionId: string, event: Event) {
     event.preventDefault();
-    
-    // Update active section
     this.activeSection = sectionId;
 
     this.router.navigate(['/home'], { fragment: sectionId }).then(() => {
