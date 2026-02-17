@@ -5,9 +5,9 @@ html, body {
   padding: 0;
 }
 
-/* --- HERO SECTION --- */
+/* --- HERO SECTION --- (Keep your existing hero styles) */
 .hero-section {
-  min-height: calc(100vh - 100px); /* Subtract navbar height (100px from your nav) */
+  min-height: calc(100vh - 100px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,6 @@ html, body {
   margin: 0 auto;
 }
 
-/* Left Side - Text */
 .hero-text {
   padding: 3rem 0;
   animation: slideInLeft 0.8s ease;
@@ -68,7 +67,7 @@ html, body {
   color: var(--text-dark);
   margin-bottom: 2rem;
   font-weight: 300;
-  min-height: 3rem; /* Prevents layout shift */
+  min-height: 3rem;
   animation: slideInLeft 0.8s ease 0.4s backwards;
 }
 
@@ -80,10 +79,9 @@ html, body {
 
 @keyframes blink {
   from, to { color: transparent; }
-  50% { color: black; } /* Or whatever color your text is */
+  50% { color: black; }
 }
 
-/* CTA Button */
 .cta-button {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -103,7 +101,6 @@ html, body {
   color:#ffffff;
 }
 
-/* Right Side - Image */
 .hero-visual {
   display: flex;
   align-items: center;
@@ -122,124 +119,7 @@ html, body {
   }
 }
 
-.hero-visual .image-placeholder {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(135deg, var(--primary-navy), #3b82f6);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(30, 58, 138, 0.3);
-  transition: all 0.3s ease;
-}
-
-.hero-visual .image-placeholder:hover {
-  transform: scale(1.02);
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.4);
-}
-
-/* Animated border inside the circle */
-.hero-visual .image-placeholder::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  height: 90%;
-  border: 3px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.placeholder-text {
-  z-index: 1;
-  position: relative;
-}
-
-/* Dark Mode Support */
-.dark-theme .hero-text .greeting {
-  color: #94a3b8;
-}
-
-.dark-theme .hero-text .name {
-  color: #3B82F6;
-}
-
-.dark-theme .roles {
-  color: #cbd5e1;
-}
-
-.dark-theme .cta-button {
-  background-color: #3B82F6;
-}
-
-.dark-theme .cta-button:hover {
-  background-color: #60A5FA;
-}
-
-.dark-theme .image-placeholder {
-  background: linear-gradient(135deg, #1e293b, #334155);
-  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
-}
-
-.dark-theme .image-placeholder::before {
-  border-color: rgba(59, 130, 246, 0.5);
-}
-
-/* Responsive Design */
-@media (max-width: 968px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .hero-text .name {
-    font-size: 3rem;
-  }
-
-  .roles {
-    font-size: 1.4rem;
-  }
-
-  .hero-visual .image-placeholder {
-    width: 350px;
-    height: 350px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-text .name {
-    font-size: 2.5rem;
-  }
-
-  .roles {
-    font-size: 1.2rem;
-  }
-
-  .hero-visual .image-placeholder {
-    width: 280px;
-    height: 280px;
-  }
-}
-
-/* CSS for Hero Image */
-
-/* Logo Container */
+/* Logo Styles (Keep your existing logo code) */
 .logo-container {
   width: 500px;
   height: 500px;
@@ -250,7 +130,6 @@ html, body {
   position: relative;
 }
 
-/* Logo Wrapper - handles all animations */
 .logo-wrapper {
   width: 100%;
   height: 100%;
@@ -260,7 +139,6 @@ html, body {
   position: relative;
 }
 
-/* Floating animation - always active */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
@@ -276,7 +154,6 @@ html, body {
   }
 }
 
-/* Hover spin effect */
 .logo-container:hover .logo-wrapper {
   animation: float 6s ease-in-out infinite, spin 2s ease-in-out;
 }
@@ -290,7 +167,6 @@ html, body {
   }
 }
 
-/* Click/Tap spin effect (add via JavaScript) */
 .logo-wrapper.spinning {
   animation: float 6s ease-in-out infinite, fastSpin 1s ease-in-out;
 }
@@ -307,7 +183,6 @@ html, body {
   }
 }
 
-/* Your Logo Image */
 .logo-image {
   width: 100%;
   height: 100%;
@@ -320,7 +195,6 @@ html, body {
   filter: drop-shadow(0 25px 50px rgba(177, 41, 48, 0.5));
 }
 
-/* Glow effect on hover */
 .logo-glow {
   position: absolute;
   width: 120%;
@@ -349,35 +223,6 @@ html, body {
   }
 }
 
-/* OPTIONAL: Continuous auto-spin (add class via JavaScript if you want this) */
-.logo-wrapper.auto-spin {
-  animation: float 6s ease-in-out infinite, continuousSpin 20s linear infinite;
-}
-
-@keyframes continuousSpin {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 968px) {
-  .logo-container {
-    width: 350px;
-    height: 350px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-container {
-    width: 280px;
-    height: 280px;
-  }
-}
-
 /* --- ABOUT SECTION --- */
 .about-section {
   padding: 100px 5%;
@@ -385,211 +230,315 @@ html, body {
   border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-.section-header h2 {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 3rem;
-  color: var(--primary-navy);
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 3rem;
-  max-width: 1100px;
-  margin: 0 auto 4rem auto;
-}
-
-.placeholder-box {
-  width: 100%;
-  height: 500px;
-  background-color: #d1d5db;
-  border-radius: 15px;
-}
-
-.about-text p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-  color: var(--text-dark);
-}
-
-/* --- SKILLS CARDS --- */
-/* Container Layout */
 .section-container {
-  max-width: none; /* Remove the width constraint */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 5%; /* Add horizontal padding instead */
 }
 
 .section-title {
   font-size: 3rem;
   font-family: var(--font-header);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: var(--primary-navy);
 }
 
-/* About Grid (Image + Text) */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  margin-bottom: 5rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+/* Profile Introduction Box - CENTERED, NO PHOTO CIRCLE */
+.intro-box {
+  max-width: 900px;
+  margin: 0 auto 5rem auto;
+  text-align: center;
 }
 
 
-.profile-placeholder {
-  width: 100%;
-  aspect-ratio: 1/1;
-  background-color: #E5E7EB;
-  border: 2px solid #94A3B8;
+/* CSS for Profile Picture */
+/* CSS for Profile Picture - BOX VERSION */
+.profile-box {
+  width: 300px;      /* Slightly larger looks better for boxes */
+  height: 300px; 
+  border-radius: 15px; /* Change to 0 for sharp corners */
+  background: linear-gradient(135deg, #b12930, #dc2626);
+  margin: 0 auto 2rem auto;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border-radius: 4px;
-  color: #64748B;
+  justify-content: center;
+  box-shadow: 0 15px 40px rgba(177, 41, 48, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
-.bio-intro {
-  font-size: 1.5rem;
-  line-height: 1.4;
+.profile-box:hover {
+  transform: scale(1.05);
+}
+
+/* Outer frame effect - matching the box shape
+.profile-box::after {
+  content: '';
+  position: absolute;
+  width: 200px; 
+  height: 200px;
+  border: 3px solid #b12930;
+  border-radius: 20px; 
+  opacity: 0.3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+} */
+
+/* Profile image inside box */
+.profile-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px; /* Inner rounding to match the container */
+}
+
+/* Responsive adjustments */
+@media (max-width: 968px) {
+  .profile-box {
+    width: 150px;
+    height: 150px;
+  }
+  .profile-box::after {
+    width: 170px;
+    height: 170px;
+  }
+}
+
+/* Bio Text */
+.bio-text {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: #333;
   margin-bottom: 2rem;
 }
 
-/* CSS for Soft Skills */
+.bio-text strong {
+  color: #b12930;
+  font-weight: 700;
+}
+
+/* Tech Stack Badges */
+.skills-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.badge {
+  background: #b12930;
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(177, 41, 48, 0.3);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(177, 41, 48, 0.4);
+  background: #9a1f26;
+}
+
+/* Skills Heading */
 .skills-heading {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 2.5rem;
+  margin: 3rem 0 2rem 0;
+  color: var(--primary-navy);
+  font-weight: 700;
 }
 
+/* NEW: Card Grid for Soft Skills (No Icons) */
+.skills-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem auto;
+}
+
+.skill-card-item {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border-top: 4px solid #b12930;
+}
+
+.skill-card-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(177, 41, 48, 0.2);
+}
+
+.skill-card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #b12930;
+}
+
+.skill-card-description {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Tech Stack Section (Keep your existing styles) */
 .skills-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* The Grey Skill Cards */
 .skill-card {
-  background-color: #b12930; /* Light grey from wireframe */
+  background-color: #b12930;
   padding: 1.5rem 2.5rem 2.5rem 2.5rem;
   border-radius: 12px;
 }
 
 .skill-card h4 {
   font-size: 2.5rem;
-  margin-top: 0; /* REMOVES the default browser gap at the top */
+  margin-top: 0;
   margin-bottom: 1.5rem;
-  text-align: left; /* Header text alignment from wireframe */
+  text-align: left;
   color:#fff;
 }
 
-/* Soft Skills: White items */
-.soft-skill-item {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.soft-skill-item strong {
-  display: block;
-  font-size: 1.5rem; /* Make the title a bit bigger */
-  font-weight: 900;
-  margin-bottom: 5px;
-  color:#b12930;
-}
-
-.soft-skill-item p {
-  font-size: 1rem;
-  color: #000000;
-  margin: 5px 0 0 0;
-}
-
-/* CSS for Tech Stack */
 .tech-stack h4 {
-  font-size: 2.5rem; /* Matches the Soft Skills title size */
-  margin-top: 0;   /* Pulls it to the top of the container */
+  font-size: 2.5rem;
+  margin-top: 0;
   margin-bottom: 2rem;
-  text-align: right; 
+  text-align: center;
 }
 
-.tech-category h5 {
-  font-size: 2rem; /* Increased from 1.2rem */
-  margin: 2rem 0 1rem 0; /* More spacing above/below */
-  font-family: var(--font-header);
+/* For Tech Skills */
+.skills-categories {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Individual Category Section */
+.category-section {
+  margin-bottom: 3.5rem;
+}
+
+/* Category Label */
+.category-label {
+  font-size: 1.3rem;
   font-weight: 700;
-  color:#fff;
+  color: #b12930;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
-/* Progress Bar Styles */
-.progress-item {
-  margin-bottom: 1.5rem;
-}
-
-.progress-item:last-child {
-  margin-bottom: 0;
-}
-
-.progress-header {
+.pills-row {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
-.tech-name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #fff;
+/* Individual Skill Item */
+.pill-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  cursor: default;
 }
 
-.tech-percentage {
+.pill-badge:hover {
+  transform: translateY(-10px);
+}
+
+/* Large Logo Container */
+.pill-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.pill-badge:hover .pill-icon {
+  transform: scale(1.1);
+}
+
+/* Logo Image */
+.pill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: filter 0.3s ease;
+}
+
+.pill-badge:hover .pill-icon img {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+}
+
+/* Skill Name Label */
+.pill-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #fff;
-  opacity: 0.9;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
 }
 
-/* Progress Bar Container */
-.progress-bar-container {
-  width: 100%;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-}
+/* Responsive Design */
+@media (max-width: 968px) {
+  .category-label {
+    font-size: 1.2rem;
+  }
 
-/* Progress Bar Fill */
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #fff 0%, #f0f0f0 100%);
-  border-radius: 10px;
-  transition: width 1.5s ease-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  animation: fillBar 1.5s ease-out;
-}
+  .pills-row {
+    gap: 2.5rem;
+  }
 
-/* Animation on page load */
-@keyframes fillBar {
-  from {
-    width: 0%;
+  .pill-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .pill-name {
+    font-size: 0.95rem;
   }
 }
 
-/* Responsive */
-@media (max-width: 968px) {
-  .about-grid, .skills-wrapper {
-    grid-template-columns: 1fr;
+@media (max-width: 480px) {
+  .category-label {
+    font-size: 1.1rem;
+  }
+
+  .pills-row {
+    gap: 2rem;
+  }
+
+  .pill-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pill-name {
+    font-size: 0.9rem;
   }
 }
 
@@ -658,7 +607,7 @@ html, body {
 
 .project-button {
   padding: 15px 35px;
-  background-color: #B2B2B2; /* Matching the grey button in wireframe */
+  background-color: #B2B2B2;
   color: white;
   border: none;
   border-radius: 50px;
@@ -675,9 +624,76 @@ html, body {
   transform: scale(1.05);
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 968px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-text .name {
+    font-size: 3rem;
+  }
+
+  .logo-container {
+    width: 350px;
+    height: 350px;
+  }
+
+  .bio-text {
+    font-size: 1.1rem;
+  }
+
+  .skills-badges {
+    gap: 0.8rem;
+  }
+
+  .badge {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .skills-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-wrapper {
+    grid-template-columns: 1fr;
+  }
+
   .cta-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text .name {
+    font-size: 2.5rem;
+  }
+
+  .logo-container {
+    width: 280px;
+    height: 280px;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .bio-text {
+    font-size: 1rem;
+  }
+
+  .badge {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .skill-card-item {
+    padding: 2rem;
+  }
+
+  .skill-card-title {
+    font-size: 1.2rem;
   }
 }
