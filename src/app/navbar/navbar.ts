@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -20,17 +21,46 @@ export class Navbar implements OnInit, AfterViewInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Theme preference logic
+    // Listen to route changes
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      // Update active section based on current route
+      this.updateActiveSection(event.urlAfterRedirects);
+    });
   }
 
   ngAfterViewInit(): void {
     // Initialize indicator position
     setTimeout(() => {
+      this.updateIndicatorFromRoute();
+    }, 100);
+  }
+
+  // Update active section based on current URL
+  private updateActiveSection(url: string): void {
+    if (url.includes('/projects')) {
+      this.activeSection = 'projects';
+    } else if (url.includes('/contact')) {
+      this.activeSection = 'contact';
+    } else if (url === '/' || url.includes('/home')) {
+      this.activeSection = 'home';
+    }
+    
+    // Update indicator after route change
+    setTimeout(() => {
+      this.updateIndicatorFromRoute();
+    }, 50);
+  }
+
+  // Update indicator based on current active link
+  private updateIndicatorFromRoute(): void {
+    if (window.innerWidth > 768) {
       const activeLink = this.navLinks.nativeElement.querySelector('a.active');
-      if (activeLink && window.innerWidth > 768) {
+      if (activeLink) {
         this.moveIndicator(activeLink);
       }
-    }, 100);
+    }
   }
 
   setActive(event: Event) {

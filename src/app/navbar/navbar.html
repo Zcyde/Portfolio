@@ -6,11 +6,25 @@
     
     <ul class="nav-links" #navLinks>
       <div class="nav-indicator" #navIndicator></div>
-      <li><a href="#" (click)="scrollToSection('home', $event); setActive($event)" [class.active]="activeSection === 'home'">HOME</a></li>
-      <li><a href="#" (click)="scrollToSection('about', $event); setActive($event)" [class.active]="activeSection === 'about'">ABOUT</a></li>
-      <li><a routerLink="/projects" routerLinkActive="active" (click)="setActive($event)">PROJECTS</a></li>
-      <li><a href="/contact" (click)="scrollToSection('resume', $event); setActive($event)" [class.active]="activeSection === 'resume'">RESUME</a></li>
-      <li><a routerLink="/contact" routerLinkActive="active" (click)="setActive($event)">CONTACT</a></li>
+      <li>
+        <a href="#" (click)="scrollToSection('home', $event); setActive($event)" [class.active]="activeSection === 'home'">HOME</a>
+      </li>
+
+      <li>
+        <a href="#" (click)="scrollToSection('about', $event); setActive($event)" [class.active]="activeSection === 'about'">ABOUT</a>
+      </li>
+
+      <li>
+        <a routerLink="/projects" routerLinkActive="active" (click)="setActive($event)"[class.active]="activeSection === 'projects'"> PROJECTS </a>
+      </li>
+
+      <li>
+        <a href="#" (click)="scrollToSection('resume', $event); setActive($event)"[class.active]="activeSection === 'resume'"> RESUME </a>
+      </li>
+
+      <li>
+        <a routerLink="/contact" routerLinkActive="active" (click)="setActive($event)" [class.active]="activeSection === 'contact'"> CONTACT </a>
+      </li>
     </ul>
 
     <!-- <button class="theme-toggle" (click)="toggleTheme()">
