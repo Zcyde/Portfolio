@@ -5,7 +5,7 @@ html, body {
   padding: 0;
 }
 
-/* --- HERO SECTION --- (Keep your existing hero styles) */
+/* ============================== HERO SECTION ==============================  */
 .hero-section {
   min-height: calc(100vh - 100px);
   display: flex;
@@ -223,7 +223,7 @@ html, body {
   }
 }
 
-/* --- ABOUT SECTION --- */
+/* ============================== ABOUT SECTION ==============================*/
 .about-section {
    padding: 100px 5%;
   background-color: #ffffff;
@@ -541,7 +541,7 @@ html, body {
   }
 }
 
-/* CSS for CTA */
+/* ============================== CSS for CTA ==============================*/
 .contact-cta {
   padding: 80px 10%;
   border-top: 1px solid rgba(0,0,0,0.1);

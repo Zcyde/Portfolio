@@ -1,15 +1,15 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ScrollService } from '../scroll'; // adjust path as needed
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [RouterLink,],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home implements OnInit, AfterViewInit {
-  
-  // Typing effect variables
+export class Home implements OnInit, AfterViewInit, OnDestroy {
+
   private typingRoles = [
     'Third year IT Web-Development Student',
     'Aspiring Full-Stack Developer and',
@@ -21,45 +21,73 @@ export class Home implements OnInit, AfterViewInit {
   private pauseBetweenLines = 500;
   private pauseBeforeRestart = 10000;
 
-  constructor() {}
+  // *** NEW ***
+  private observer!: IntersectionObserver;
+  private scrollSections = ['home', 'about'];
 
-  ngOnInit(): void {
-    // Component initialization
-  }
+  constructor(
+    private ngZone: NgZone,              // *** NEW ***
+    private scrollService: ScrollService  // *** NEW ***
+  ) {}
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    // Start typing effect after view loads
     setTimeout(() => this.typeEffect(), 1000);
+    setTimeout(() => this.observeSections(), 300); // *** NEW ***
   }
 
-  // Typing effect method - types each line, keeps them, then restarts
+  // *** NEW: Entire method ***
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+  }
+
+  // *** NEW: Entire method ***
+  private observeSections(): void {
+    this.observer?.disconnect();
+
+    const options: IntersectionObserverInit = {
+      root: null,
+      rootMargin: '0px 0px -40% 0px',
+      threshold: 0
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.ngZone.run(() => {
+            this.scrollService.activeSection.set(entry.target.id);
+          });
+        }
+      });
+    }, options);
+
+    this.scrollSections.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) this.observer.observe(section);
+    });
+  }
+
   private typeEffect(): void {
     const typingElement = document.getElementById('typingText');
     if (!typingElement) return;
 
     const currentRole = this.typingRoles[this.roleIndex];
-    
-    // Build the text with all previous lines
     let fullText = '';
     for (let i = 0; i < this.roleIndex; i++) {
       fullText += this.typingRoles[i] + '<br>';
     }
     fullText += currentRole.substring(0, this.charIndex + 1);
-    
     typingElement.innerHTML = fullText;
     this.charIndex++;
 
-    // Check if we finished typing the current role
     if (this.charIndex === currentRole.length) {
       this.roleIndex++;
       this.charIndex = 0;
-      
-      // If there are more roles to type
       if (this.roleIndex < this.typingRoles.length) {
         setTimeout(() => this.typeEffect(), this.pauseBetweenLines);
         return;
       } else {
-        // All lines typed, pause then restart
         setTimeout(() => {
           this.roleIndex = 0;
           this.charIndex = 0;
@@ -68,12 +96,9 @@ export class Home implements OnInit, AfterViewInit {
         return;
       }
     }
-
-    // Continue typing
     setTimeout(() => this.typeEffect(), this.typingSpeed);
   }
 
-  // Your existing scroll method
   scrollTo(section: string) {
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   }
