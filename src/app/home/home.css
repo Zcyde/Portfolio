@@ -225,9 +225,10 @@ html, body {
 
 /* --- ABOUT SECTION --- */
 .about-section {
-  padding: 100px 5%;
-  background-color: var(--bg-white);
-  border-top: 1px solid rgba(0,0,0,0.1);
+   padding: 100px 5%;
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(177, 41, 48, 0.08) 2px, transparent 2px);
+  background-size: 40px 40px;
 }
 
 .section-container {
@@ -239,77 +240,37 @@ html, body {
   font-size: 3rem;
   font-family: var(--font-header);
   margin-bottom: 3rem;
-  text-align: center;
-  color: var(--primary-navy);
+  text-align: left;
+  color: var(--accent);
 }
 
 /* Profile Introduction Box - CENTERED, NO PHOTO CIRCLE */
 .intro-box {
-  max-width: 900px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1100px;
   margin: 0 auto 5rem auto;
-  text-align: center;
+  text-align: left;
 }
 
 
 /* CSS for Profile Picture */
-/* CSS for Profile Picture - BOX VERSION */
-.profile-box {
-  width: 300px;      /* Slightly larger looks better for boxes */
-  height: 300px; 
-  border-radius: 15px; /* Change to 0 for sharp corners */
-  background: linear-gradient(135deg, #b12930, #dc2626);
-  margin: 0 auto 2rem auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 15px 40px rgba(177, 41, 48, 0.3);
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.profile-box:hover {
-  transform: scale(1.05);
-}
-
-/* Outer frame effect - matching the box shape
-.profile-box::after {
-  content: '';
-  position: absolute;
-  width: 200px; 
-  height: 200px;
-  border: 3px solid #b12930;
-  border-radius: 20px; 
-  opacity: 0.3;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-} */
-
-/* Profile image inside box */
-.profile-box img {
-  width: 100%;
-  height: 100%;
+.profile-photo {
+  width: 300px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 12px; /* Inner rounding to match the container */
-}
-
-/* Responsive adjustments */
-@media (max-width: 968px) {
-  .profile-box {
-    width: 150px;
-    height: 150px;
-  }
-  .profile-box::after {
-    width: 170px;
-    height: 170px;
-  }
+  border-radius: 0;
+  display: block;
+  position: sticky;
+  top: 120px; /* stays in view as you scroll past the bio */
+  filter: drop-shadow(0 12px 30px rgba(177, 41, 48, 0.2)) drop-shadow(0 4px 10px rgba(0,0,0,0.10));
 }
 
 /* Bio Text */
 .bio-text {
-  font-size: 1.3rem;
+  font-size: 1.7rem;
   line-height: 1.8;
   color: #333;
   margin-bottom: 2rem;
@@ -345,15 +306,6 @@ html, body {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(177, 41, 48, 0.4);
   background: #9a1f26;
-}
-
-/* Skills Heading */
-.skills-heading {
-  text-align: center;
-  font-size: 2.5rem;
-  margin: 3rem 0 2rem 0;
-  color: var(--primary-navy);
-  font-weight: 700;
 }
 
 /* NEW: Card Grid for Soft Skills (No Icons) */
@@ -422,34 +374,81 @@ html, body {
   text-align: center;
 }
 
-/* For Tech Skills */
+/* Skills heading alignment */
+/* Reset categories to full width, left-aligned */
 .skills-categories {
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
 }
 
-/* Individual Category Section */
 .category-section {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Category Label */
 .category-label {
-  font-size: 1.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  text-transform: none;
+  letter-spacing: 0;
+  text-align: left;
+  margin-bottom: 1.2rem;
+}
+
+.skills-section {
+  max-width: 1100px;
+  margin: 0 auto 5rem auto;
+  padding-top: 3rem;
+}
+
+.skills-title {
+  font-size: 2rem;
   font-weight: 700;
   color: #b12930;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .pills-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
-  justify-content: center;
+  flex-direction: row;
+  gap: 12.5rem;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.pill-icon {
+  width: 55px;
+  height: 55px;
+}
+
+.pill-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Responsive — stack on mobile */
+@media (max-width: 768px) {
+  .intro-box {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo {
+    width: 160px;
+    height: 200px;
+    position: static;
+  }
+
+  .pills-row {
+    justify-content: center;
+  }
+
+  .category-label {
+    text-align: center;
+  }
 }
 
 /* Individual Skill Item */
@@ -468,8 +467,8 @@ html, body {
 
 /* Large Logo Container */
 .pill-icon {
-  width: 80px;
-  height: 80px;
+  width: 55px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -496,7 +495,7 @@ html, body {
 
 /* Skill Name Label */
 .pill-name {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #333;
   text-align: center;
