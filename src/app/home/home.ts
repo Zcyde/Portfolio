@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ScrollService } from '../scroll'; // adjust path as needed
+import { ScrollService } from '../scroll';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink,],
+  imports: [RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -21,28 +21,28 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   private pauseBetweenLines = 500;
   private pauseBeforeRestart = 10000;
 
-  // *** NEW ***
   private observer!: IntersectionObserver;
+  private revealObserver!: IntersectionObserver;  // ← class property declared here
   private scrollSections = ['home', 'about'];
 
   constructor(
-    private ngZone: NgZone,              // *** NEW ***
-    private scrollService: ScrollService  // *** NEW ***
+    private ngZone: NgZone,
+    private scrollService: ScrollService
   ) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     setTimeout(() => this.typeEffect(), 1000);
-    setTimeout(() => this.observeSections(), 300); // *** NEW ***
+    setTimeout(() => this.observeSections(), 300);
+    setTimeout(() => this.setupScrollReveal(), 300);
   }
 
-  // *** NEW: Entire method ***
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    this.revealObserver?.disconnect();  // ← now this can actually reach it
   }
 
-  // *** NEW: Entire method ***
   private observeSections(): void {
     this.observer?.disconnect();
 
@@ -66,6 +66,27 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       const section = document.getElementById(id);
       if (section) this.observer.observe(section);
     });
+  }
+
+  private setupScrollReveal(): void {
+    this.revealObserver = new IntersectionObserver(   // ← assigns to class property
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            this.revealObserver.unobserve(entry.target);  // ← uses class property
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.1
+      }
+    );
+
+    document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up')
+      .forEach(el => this.revealObserver.observe(el));  // ← uses class property
   }
 
   private typeEffect(): void {
@@ -102,6 +123,4 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   scrollTo(section: string) {
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   }
-
-  
 }
