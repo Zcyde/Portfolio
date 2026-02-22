@@ -1,39 +1,87 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 
 @Component({
   selector: 'app-contact',
-  imports: [],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
 export class Contact implements AfterViewInit, OnDestroy {
-
   private revealObserver!: IntersectionObserver;
 
+  // 1. Form Data
+  formData = {
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  };
+  isSending = false;
+
+  // 2. FAQ Data
   faqs = [
     {
       question: 'What is your preferred time zone?',
-      answer: "<b>I'm based in the Philippines.</b> I'm flexible and happy to schedule meetings that work across different time zones.",
+      answer: "<b>I'm based in the Philippines.</b> I'm flexible and happy to schedule meetings.",
       open: false
     },
     {
       question: 'Do you offer free consultations?',
-      answer: "<b>Yes! I offer a free initial consultation</b> to discuss your project needs, goals, and how I can help bring your ideas to life.",
+      answer: "<b>Yes! I offer a free initial consultation</b> to discuss your project needs.",
       open: false
     },
     {
       question: 'How do we start a project together?',
-      answer: "Simply fill out the contact form or reach out via email. We'll set up a quick call to align on scope, timeline, and deliverables.",
+      answer: "Simply fill out the contact form or reach out via email.",
       open: false
     }
   ];
 
+  // 3. Email Logic
+  public sendEmail(e: Event) {
+    e.preventDefault();
+    if (this.isSending) return;
+
+    this.isSending = true;
+
+    // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS
+    const SERVICE_ID = 'service_8dwmb48';
+    const TEMPLATE_ID = 'template_h8mfiqh';
+    const PUBLIC_KEY = 'AnsdRxg8SzGf5IILq';
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      name: this.formData.name,
+      email: this.formData.email,
+      subject: this.formData.subject,
+      message: this.formData.message,
+    }, PUBLIC_KEY)
+    .then((result: EmailJSResponseStatus) => {
+        alert('🚀 Message sent successfully!');
+        this.formData = { name: '', email: '', subject: '', message: '' };
+    }, (error: any) => {
+        alert('Failed to send message. Please try again.');
+        console.error(error.text);
+    })
+    .finally(() => {
+        this.isSending = false;
+    });
+  }
+
+  // 4. Existing Lifecycle & UI Logic
   ngAfterViewInit(): void {
     setTimeout(() => this.setupScrollReveal(), 300);
   }
 
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
+  }
+
+  toggleFaq(index: number) {
+    this.faqs[index].open = !this.faqs[index].open;
   }
 
   private setupScrollReveal(): void {
@@ -58,9 +106,5 @@ export class Contact implements AfterViewInit, OnDestroy {
           this.revealObserver.observe(el);
         }
       });
-  }
-
-  toggleFaq(index: number) {
-    this.faqs[index].open = !this.faqs[index].open;
   }
 }

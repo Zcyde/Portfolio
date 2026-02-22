@@ -197,25 +197,25 @@
 
       <!-- RIGHT -->
       <div class="contact-right">
-        <div class="contact-form-card reveal-right">
+        <form (submit)="sendEmail($event)" class="contact-form-card reveal-right">
           <div class="form-group">
             <label class="form-label">Full Name</label>
-            <input type="text" class="form-input" placeholder="Enter your name"/>
+            <input type="text" name="from_name" [(ngModel)]="formData.name" class="form-input" placeholder="Enter your name" required/>
           </div>
           <div class="form-group">
             <label class="form-label">Email Address</label>
-            <input type="email" class="form-input" placeholder="Enter your email address"/>
+            <input type="email" name="reply_to" [(ngModel)]="formData.email" class="form-input" placeholder="Enter your email address" required/>
           </div>
           <div class="form-group">
             <label class="form-label">Subject</label>
-            <input type="text" class="form-input" placeholder="What do you want to talk about?"/>
+            <input type="text" name="subject" [(ngModel)]="formData.subject" class="form-input" placeholder="What do you want to talk about?" required/>
           </div>
           <div class="form-group">
             <label class="form-label">Message</label>
-            <textarea class="form-input form-textarea" placeholder="How can I help you?"></textarea>
+            <textarea name="message" [(ngModel)]="formData.message" class="form-input form-textarea" placeholder="How can I help you?" required></textarea>
           </div>
-          <button class="form-submit">Send Message &nbsp;<i class="fas fa-paper-plane"></i></button>
-        </div>
+          <button type="submit" class="form-submit">Send Message &nbsp;<i class="fas fa-paper-plane"></i></button>
+        </form>
       </div>
 
     </div>
