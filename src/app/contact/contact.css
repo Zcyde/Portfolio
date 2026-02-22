@@ -429,6 +429,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: #ffffff;
 }
 
 .faq-item {
@@ -440,7 +441,10 @@
 
 [data-theme="dark"] .faq-item { border-color: #2e2e2e; }
 
-.faq-item.open { border-color: #b12930; }
+.faq-item.open { 
+  border-color: #b12930; 
+  background-color: #ffffff;
+}
 
 .faq-btn {
   width: 100%;
@@ -451,7 +455,7 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-dark);
   text-align: left;

@@ -19,11 +19,11 @@
       </li>
 
       <li>
-        <a href="/contact" (click)="scrollToSection('resume', $event); setActive($event)"[class.active]="activeSection === 'resume'"> RESUME </a>
+        <a href="/contact" (click)="scrollToSection('resume', $event); setActive($event)" [class.active]="activeSection === 'resume'">RESUME</a>
       </li>
 
       <li>
-        <a routerLink="/contact" routerLinkActive="active" (click)="setActive($event)" [class.active]="activeSection === 'contact'"> CONTACT </a>
+        <a href="/contact" (click)="scrollToSection('contact', $event); setActive($event)" [class.active]="activeSection === 'contact'">CONTACT</a>
       </li>
     </ul>
 

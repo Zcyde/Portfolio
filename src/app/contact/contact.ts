@@ -11,12 +11,12 @@ export class Contact {
   faqs = [
     {
       question: 'What is your preferred time zone?',
-      answer: "I'm based in the Philippines (PST, UTC+8). I'm flexible and happy to schedule meetings that work across different time zones.",
+      answer: "<b>I'm based in the Philippines.</b> I'm flexible and happy to schedule meetings that work across different time zones.",
       open: false
     },
     {
       question: 'Do you offer free consultations?',
-      answer: "Yes! I offer a free initial consultation to discuss your project needs, goals, and how I can help bring your ideas to life.",
+      answer: "<b>Yes! I offer a free initial consultation</b> to discuss your project needs, goals, and how I can help bring your ideas to life.",
       open: false
     },
     {

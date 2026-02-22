@@ -55,9 +55,11 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   private updateActiveSection(url: string): void {
     if (url.includes('/projects')) {
       this.activeSection = 'projects';
+    } else if (url.includes('/contact#resume')) {
+      this.activeSection = 'resume';
     } else if (url.includes('/contact')) {
       this.activeSection = 'contact';
-    } else if (url === '/' || url.includes('/home')) {
+    }else if (url === '/' || url.includes('/home')) {
       this.activeSection = 'home';
     }
   }
@@ -94,13 +96,23 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   scrollToSection(sectionId: string, event: Event) {
     event.preventDefault();
     this.activeSection = sectionId;
-    this.router.navigate(['/home'], { fragment: sectionId }).then(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else if (sectionId === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+
+    const route = (sectionId === 'resume') ? '/contact' : (sectionId === 'contact') ? '/contact' : '/home';
+
+    this.router.navigate([route], {fragment: sectionId}).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const navbarHeight = 80;
+          const elementTop = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementTop - navbarHeight,
+            behavior: 'smooth'
+          }); 
+        } else if (sectionId === 'home') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
     });
   }
 }
