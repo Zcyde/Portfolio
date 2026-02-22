@@ -96,7 +96,7 @@ html, body {
 }
 
 .cta-button:hover {
-  transform: translateY(-3px);
+  transform: scale(1.05);
   background-color: #8a2429;
   color:#ffffff;
 }
@@ -576,7 +576,6 @@ html, body {
 /* ============================== CSS for CTA ==============================*/
 .contact-cta {
   padding: 80px 10%;
-  border-top: 1px solid #b12930;
   background-color: #ffffff;
   background-image: radial-gradient(circle, rgba(177, 41, 48, 0.08) 2px, transparent 2px);
   background-size: 40px 40px;
@@ -586,7 +585,7 @@ html, body {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 40px;
-  color: var(--text-primary);
+  color: var(--accent);
 }
 
 .cta-grid {
@@ -605,6 +604,10 @@ html, body {
   align-items: center;
   color: var(--accent);
   border-radius: 8px;
+}
+
+.cta-info {
+  padding-left: 5rem;
 }
 
 .contact-item {
