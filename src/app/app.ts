@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from "./navbar/navbar";
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling,} from '@angular/router';
 import { routes } from './app.routes';
 import { ApplicationConfig,} from '@angular/core';
 import { Footer } from './footer/footer';
@@ -32,7 +32,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, 
       withInMemoryScrolling({ 
         anchorScrolling: 'enabled', // This enables the jump to #id
-        scrollPositionRestoration: 'enabled' 
+        scrollPositionRestoration: 'top',
+        
       })
     )
   ]

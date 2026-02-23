@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, NgZone, ChangeDetectorRef, effect } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { ScrollService } from '../scroll';
@@ -7,7 +7,7 @@ import { ScrollService } from '../scroll';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule],
+  imports: [CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -102,6 +102,17 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
     this.activeSection = sectionId;
 
     const route = (sectionId === 'resume' || sectionId === 'contact') ? '/contact' : '/home';
+
+    if (sectionId === 'projects') {
+      this.router.navigate(['/projects']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          this.updateIndicatorFromRoute();
+          this.isManualNavigation = false;
+        }, 100);
+      });
+      return;
+    }
 
     this.router.navigate([route], { fragment: sectionId }).then(() => {
       setTimeout(() => {

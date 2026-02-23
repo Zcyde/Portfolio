@@ -15,7 +15,7 @@
       </li>
 
       <li>
-        <a routerLink="/projects" routerLinkActive="active" (click)="setActive($event)"[class.active]="activeSection === 'projects'"> PROJECTS </a>
+        <a href="#" (click)="scrollToSection('projects', $event); setActive($event)" [class.active]="activeSection === 'projects'">PROJECTS</a>
       </li>
 
       <li>

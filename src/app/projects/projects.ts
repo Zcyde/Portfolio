@@ -52,8 +52,8 @@ export class Projects implements AfterViewInit, OnDestroy {
 
     {
       id: 3,
-      title: 'Sole Purpose — Static E-commerce Website',
-      description: 'A shoe e-commerce website designed with HTML and CSS, focused on clean product presentation and UX.',
+      title: 'Sole Purpose — Static E-commerce Shoe Website',
+      description: 'A shoe E-commerce website designed with HTML and CSS, focused on clean product presentation and UX.',
       techStack: ['HTML', 'CSS'],
       link: 'https://solepurposeshop.netlify.app',
       thumbnail: 'SolePurpose-thumbnail.png',

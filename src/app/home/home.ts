@@ -130,7 +130,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
         const elementTop = element.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top: elementTop - navbarHeight, behavior: 'smooth' });
       }
-    }, 300);
+    }, 200);
   });
 }
 

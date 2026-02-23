@@ -7,7 +7,8 @@
 
 /* ── RESUME HEADER ── */
 .section-title {
-  font-size: 3rem;
+  font-size: clamp(3.5rem, 7vw, 6rem);  /* was 3rem */
+  font-weight: 900;                       /* add this to match */
   font-family: var(--font-header);
   margin-bottom: 3rem;
   text-align: left;

@@ -8,7 +8,7 @@
     </h1>
   </div>
 
-  <div class="hero-right">
+  <div class="hero-right reveal-right">  <!-- added reveal-right -->
     <div class="stat-number">{{ otherProjects.length + 1 }}</div>
     <div class="stat-label">Projects</div>
     <p class="stat-desc">From fullstack websites to UI/UX designs</p>
@@ -17,15 +17,14 @@
 </div>
 
 <!-- ══ FEATURED PROJECT ══ -->
-<div class="featured-wrap reveal-up">
+<div class="featured-wrap">  <!-- removed reveal-up from wrapper -->
 
-  <div class="featured-thumb">
+  <div class="featured-thumb reveal-left">  <!-- individual reveal -->
     <span class="feat-badge">★ Featured</span>
-    <!-- Swap with your screenshot: <img src="assets/projects/domore.png" [alt]="featuredProject.title" /> -->
     <img [src]="featuredProject.thumbnail" [alt]="featuredProject.title" />
   </div>
 
-  <div class="featured-info">
+  <div class="featured-info reveal-right">  <!-- individual reveal -->
     <h2 class="info-title">{{ featuredProject.title }}</h2>
     <p class="info-desc">{{ featuredProject.description }}</p>
 
@@ -52,17 +51,15 @@
   <div class="section-header reveal-left">Other Projects</div>
 
   @for (project of otherProjects; track project.id; let i = $index) {
-    <a
-      class="project-row reveal-up"
-      [href]="project.link"
+    <div
+      class="project-row"
       [class.row-even]="i % 2 !== 0">
 
-      <div class="row-thumb">
-        <!-- Swap with: <img [src]="'assets/projects/' + project.id + '.png'" [alt]="project.title" /> -->
+      <div class="row-thumb reveal-left">
         <img [src]="project.thumbnail" [alt]="project.title" />
       </div>
 
-      <div class="row-body">
+      <div class="row-body reveal-right">
         <h3 class="row-title">{{ project.title }}</h3>
         <p class="row-desc">{{ project.description }}</p>
 
@@ -72,16 +69,17 @@
           }
         </div>
 
-        <span class="btn-secondary">
+        <a [href]="project.link" target="_blank" class="btn-secondary">
           See Details
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5">
+              stroke="currentColor" stroke-width="2.5">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
-        </span>
+        </a>
       </div>
 
-    </a>
+    </div>
   }
+
 
 </section>
