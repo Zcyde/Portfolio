@@ -1,50 +1,22 @@
-import { Component, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, NgZone, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { ScrollService } from '../scroll';
+import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [FormsModule, CommonModule,],
+  imports: [FormsModule, CommonModule],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
-export class Contact implements AfterViewInit, OnDestroy {
+export class Contact implements OnInit, AfterViewInit, OnDestroy {
   private revealObserver!: IntersectionObserver;
-  private sectionObserver!: IntersectionObserver;  // add this
+  private sectionObserver!: IntersectionObserver;
   private scrollSections = ['resume', 'contact'];
+  private isManualNavigation = false;
 
-   constructor(
-    private ngZone: NgZone,           // add this
-    private scrollService: ScrollService  // add this
-  ) {}
-
-  ngOnInit(): void {}
-
-  private observeSections(): void {
-    this.sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.ngZone.run(() => {
-            this.scrollService.activeSection.set(entry.target.id);
-          });
-        }
-      });
-    }, {
-      root: null,
-      rootMargin: '0px 0px -40% 0px',
-      threshold: 0
-    });
-
-    this.scrollSections.forEach(id => {
-      const section = document.getElementById(id);
-      if (section) this.sectionObserver.observe(section);
-    });
-  }
-
-  // 1. Form Data
   formData = {
     name: '',
     email: '',
@@ -53,7 +25,6 @@ export class Contact implements AfterViewInit, OnDestroy {
   };
   isSending = false;
 
-  // 2. FAQ Data
   faqs = [
     {
       question: 'What is your preferred time zone?',
@@ -72,14 +43,68 @@ export class Contact implements AfterViewInit, OnDestroy {
     }
   ];
 
-  // 3. Email Logic
+  constructor(
+    private ngZone: NgZone,
+    private scrollService: ScrollService
+  ) {}
+
+  ngOnInit(): void {
+    const intent = this.scrollService.intentSection();
+    if (intent === 'contact') {
+      this.isManualNavigation = true;
+      this.scrollService.activeSection.set('contact');
+      setTimeout(() => {
+        this.isManualNavigation = false;
+        this.scrollService.intentSection.set('');
+      }, 1500);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.setupScrollReveal(), 300);
+    setTimeout(() => this.observeSections(), 300);
+  }
+
+  ngOnDestroy(): void {
+    this.revealObserver?.disconnect();
+    this.sectionObserver?.disconnect();
+  }
+
+  private observeSections(): void {
+    this.sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+
+          // During manual nav to contact, only block resume from taking over
+          if (this.isManualNavigation && id === 'resume') return;
+
+          // Clear manual nav flag once user scrolls to any section naturally
+          this.isManualNavigation = false;
+          this.scrollService.intentSection.set('');
+
+          this.ngZone.run(() => {
+            this.scrollService.activeSection.set(id);
+          });
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '-20% 0px -20% 0px',
+      threshold: 0
+    });
+
+    this.scrollSections.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) this.sectionObserver.observe(section);
+    });
+  }
+
   public sendEmail(e: Event) {
     e.preventDefault();
     if (this.isSending) return;
-
     this.isSending = true;
 
-    // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS
     const SERVICE_ID = 'service_8dwmb48';
     const TEMPLATE_ID = 'template_h8mfiqh';
     const PUBLIC_KEY = 'AnsdRxg8SzGf5IILq';
@@ -91,26 +116,13 @@ export class Contact implements AfterViewInit, OnDestroy {
       message: this.formData.message,
     }, PUBLIC_KEY)
     .then((result: EmailJSResponseStatus) => {
-        alert('Message sent successfully');
-        this.formData = { name: '', email: '', subject: '', message: '' };
+      alert('Message sent successfully');
+      this.formData = { name: '', email: '', subject: '', message: '' };
     }, (error: any) => {
-        alert('Failed to send message. Please try again.');
-        console.error(error.text);
+      alert('Failed to send message. Please try again.');
+      console.error(error.text);
     })
-    .finally(() => {
-        this.isSending = false;
-    });
-  }
-
-  // 4. Existing Lifecycle & UI Logic
-  ngAfterViewInit(): void {
-    setTimeout(() => this.setupScrollReveal(), 300);
-    setTimeout(() => this.observeSections(), 300);
-  }
-
-  ngOnDestroy(): void {
-    this.revealObserver?.disconnect();
-     this.sectionObserver?.disconnect();
+    .finally(() => { this.isSending = false; });
   }
 
   toggleFaq(index: number) {

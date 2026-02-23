@@ -9,7 +9,7 @@ import { ScrollService } from '../scroll';
   styleUrl: './home.css',
 })
 export class Home implements OnInit, AfterViewInit, OnDestroy {
-
+  
   private typingRoles = [
     'Third year IT Web-Development Student',
     'Aspiring Full-Stack Developer and',
@@ -22,7 +22,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   private pauseBeforeRestart = 10000;
 
   private observer!: IntersectionObserver;
-  private revealObserver!: IntersectionObserver;  // ← class property declared here
+  private revealObserver!: IntersectionObserver;
   private scrollSections = ['home', 'about'];
 
   constructor(
@@ -31,7 +31,15 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const intent = this.scrollService.intentSection();
+    if (intent === 'about') {
+      this.scrollService.activeSection.set('about');
+      setTimeout(() => {
+        this.scrollService.intentSection.set('');
+      }, 1500);
+    }
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => this.typeEffect(), 1000);
@@ -41,27 +49,32 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
-    this.revealObserver?.disconnect();  // ← now this can actually reach it
+    this.revealObserver?.disconnect();
   }
 
   private observeSections(): void {
     this.observer?.disconnect();
 
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: '0px 0px -40% 0px',
-      threshold: 0
-    };
-
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const intent = this.scrollService.intentSection();
+
+          // If navigating to 'about', block 'home' from overriding
+          if (intent === 'about' && id === 'home') return;
+
+          this.scrollService.intentSection.set('');
           this.ngZone.run(() => {
-            this.scrollService.activeSection.set(entry.target.id);
+            this.scrollService.activeSection.set(id);
           });
         }
       });
-    }, options);
+    }, {
+      root: null,
+      rootMargin: '-20% 0px -20% 0px',
+      threshold: 0
+    });
 
     this.scrollSections.forEach(id => {
       const section = document.getElementById(id);
@@ -70,12 +83,12 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setupScrollReveal(): void {
-    this.revealObserver = new IntersectionObserver(   // ← assigns to class property
+    this.revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            this.revealObserver.unobserve(entry.target);  // ← uses class property
+            this.revealObserver.unobserve(entry.target);
           }
         });
       },
@@ -87,7 +100,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     );
 
     document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up')
-      .forEach(el => this.revealObserver.observe(el));  // ← uses class property
+      .forEach(el => this.revealObserver.observe(el));
   }
 
   private typeEffect(): void {
@@ -122,17 +135,19 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToContact() {
-  this.router.navigate(['/contact'], { fragment: 'contact' }).then(() => {
-    setTimeout(() => {
-      const element = document.getElementById('contact');
-      if (element) {
-        const navbarHeight = 80;
-        const elementTop = element.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: elementTop - navbarHeight, behavior: 'smooth' });
-      }
-    }, 200);
-  });
-}
+    this.scrollService.intentSection.set('contact');
+    this.scrollService.activeSection.set('contact');
+    this.router.navigate(['/contact'], { fragment: 'contact' }).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById('contact');
+        if (element) {
+          const navbarHeight = 80;
+          const elementTop = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top: elementTop - navbarHeight, behavior: 'smooth' });
+        }
+      }, 300);
+    });
+  }
 
   scrollTo(section: string) {
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });

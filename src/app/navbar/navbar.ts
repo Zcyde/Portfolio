@@ -28,11 +28,9 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   ) {
     effect(() => {
       const section = this.scrollService.activeSection();
-      if (!this.isManualNavigation) {
-        this.activeSection = section;
-        this.cdr.detectChanges();
-        setTimeout(() => this.updateIndicatorFromRoute(), 60);
-      }
+      this.activeSection = section;
+      this.cdr.detectChanges();
+      setTimeout(() => this.updateIndicatorFromRoute(), 60);
     });
   }
 
@@ -100,6 +98,7 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault();
     this.isManualNavigation = true;
     this.activeSection = sectionId;
+    this.scrollService.intentSection.set(sectionId);
 
     const route = (sectionId === 'resume' || sectionId === 'contact') ? '/contact' : '/home';
 
@@ -127,7 +126,6 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
         } else if (sectionId === 'home') {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        // re-enable scroll service after navigation settles
         setTimeout(() => { this.isManualNavigation = false; }, 1000);
       }, 100);
     });
