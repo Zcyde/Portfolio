@@ -107,9 +107,32 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+    formErrors = {
+    name: false,
+    email: false,
+    emailInvalid: false,
+    subject: false,
+    message: false
+  };
+
   public sendEmail(e: Event) {
     e.preventDefault();
     if (this.isSending) return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Reset errors
+    this.formErrors = { name: false, email: false, emailInvalid: false, subject: false, message: false };
+
+    // Validate
+    if (!this.formData.name.trim()) this.formErrors.name = true;
+    if (!this.formData.email.trim()) this.formErrors.email = true;
+    else if (!emailRegex.test(this.formData.email)) this.formErrors.emailInvalid = true;
+    if (!this.formData.subject.trim()) this.formErrors.subject = true;
+    if (!this.formData.message.trim()) this.formErrors.message = true;
+
+    if (Object.values(this.formErrors).some(v => v)) return;
+
     this.isSending = true;
 
     const SERVICE_ID = 'service_8dwmb48';
@@ -125,6 +148,7 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
     .then((result: EmailJSResponseStatus) => {
       alert('Message sent successfully');
       this.formData = { name: '', email: '', subject: '', message: '' };
+      this.formErrors = { name: false, email: false, emailInvalid: false, subject: false, message: false };
     }, (error: any) => {
       alert('Failed to send message. Please try again.');
       console.error(error.text);

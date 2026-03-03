@@ -224,21 +224,41 @@
       <div class="contact-right">
         <form (submit)="sendEmail($event)" class="contact-form-card reveal-right">
           <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" name="from_name" [(ngModel)]="formData.name" class="form-input" placeholder="Enter your name" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" name="reply_to" [(ngModel)]="formData.email" class="form-input" placeholder="Enter your email address" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Subject</label>
-            <input type="text" name="subject" [(ngModel)]="formData.subject" class="form-input" placeholder="What do you want to talk about?" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message</label>
-            <textarea name="message" [(ngModel)]="formData.message" class="form-input form-textarea" placeholder="How can I help you?" required></textarea>
-          </div>
+              <label class="form-label">Full Name</label>
+              <input type="text" name="from_name" [(ngModel)]="formData.name"
+                [class.input-error]="formErrors.name"
+                (input)="formErrors.name = false"
+                class="form-input" placeholder="Enter your name"/>
+              <span class="error-msg" *ngIf="formErrors.name">Name is required.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" name="reply_to" [(ngModel)]="formData.email"
+                [class.input-error]="formErrors.email || formErrors.emailInvalid"
+                (input)="formErrors.email = false; formErrors.emailInvalid = false"
+                class="form-input" placeholder="Enter your email address"/>
+              <span class="error-msg" *ngIf="formErrors.email">Email is required.</span>
+              <span class="error-msg" *ngIf="formErrors.emailInvalid">Please enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <input type="text" name="subject" [(ngModel)]="formData.subject"
+                [class.input-error]="formErrors.subject"
+                (input)="formErrors.subject = false"
+                class="form-input" placeholder="What do you want to talk about?"/>
+              <span class="error-msg" *ngIf="formErrors.subject">Subject is required.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea name="message" [(ngModel)]="formData.message"
+                [class.input-error]="formErrors.message"
+                (input)="formErrors.message = false"
+                class="form-input form-textarea" placeholder="How can I help you?"></textarea>
+              <span class="error-msg" *ngIf="formErrors.message">Message is required.</span>
+            </div>
           <button type="submit" class="form-submit">Send Message &nbsp;<i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
