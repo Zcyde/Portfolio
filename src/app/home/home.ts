@@ -12,8 +12,8 @@ import { Title, Meta } from '@angular/platform-browser';
 export class Home implements OnInit, AfterViewInit, OnDestroy {
   
   private typingRoles = [
-    // 'Third year IT Web-Development Student',
-    'Full-Stack Developer and',
+    'Fourth Year IT Web-Development Student',
+    'Aspiring Full-Stack Developer and',
     'Cloud Engineer'
   ];
   private roleIndex = 0;
